@@ -1,32 +1,43 @@
 # CMakeLists.txt for Database_Engine_cpp project
 
 cmake_minimum_required(VERSION 3.10)
+project(Database_Engine_cpp CXX)
 
-project(Database_Engine_cpp LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 20)
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories(include)
+# Set the source and include directories
+set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
+set(INC_DIR ${CMAKE_SOURCE_DIR}/include)
+set(EXECUTABLE_NAME dbe)
 
-set(SOURCE_FILES
-        src/main.cpp
-        # src/value.cpp
-        # src/record.cpp
-        # src/bplus_tree.cpp
-        # src/index.cpp
-        # src/table.cpp
-        # src/database.cpp
-        # src/sql_parser.cpp
-        # src/minidb.cpp
+# Collect all .cpp and .h files from src/ and include/
+file(GLOB_RECURSE SOURCES ${SRC_DIR}/*.cpp)
+file(GLOB_RECURSE HEADERS ${INC_DIR}/*.h)
+
+# Add executable target
+add_executable(${EXECUTABLE_NAME} ${SOURCES} ${HEADERS})
+
+# Include the include folder for headers
+target_include_directories(${EXECUTABLE_NAME} PRIVATE ${INC_DIR})
+
+# Set global debug and release flags
+set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb -DDEBUG -Wall -Wextra -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG -Wall")
+
+# Use the debug and release flags correctly
+target_compile_options(${EXECUTABLE_NAME} PRIVATE
+    $<$<CONFIG:Debug>:-g -ggdb -Wall -Wextra -O0>
+    $<$<CONFIG:Release>:-O2 -DNDEBUG -Wall>
 )
 
-add_executable(Database_Engine_cpp ${SOURCE_FILES})
+# Print some useful info for debugging
+message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Compiler flags (Debug): ${CMAKE_CXX_FLAGS_DEBUG}")
+message(STATUS "Compiler flags (Release): ${CMAKE_CXX_FLAGS_RELEASE}")
 
-set_target_properties(Database_Engine_cpp PROPERTIES
-        LINK_FLAGS "-Wl,--subsystem,console"
-        WIN32_EXECUTABLE FALSE
+# Set output directory
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
-
-target_link_libraries(Database_Engine_cpp PRIVATE -lmingw32 -lstdc++) # Link essential MinGW library
