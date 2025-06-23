@@ -1,3 +1,4 @@
+// include/minidb.h
 #ifndef MINIDB_H
 #define MINIDB_H
 
@@ -9,12 +10,13 @@
 #include <sstream>
 #include <algorithm>
 #include <memory>
-#include <filesystem> // C++17
+#include <filesystem>
 #include <cstdlib>
 #include <cctype>
 #include <iomanip>
 
-// Forward declarations
+#include "common.h"
+
 class Database;
 class Table;
 class Index;
@@ -22,4 +24,4 @@ class BPlusTree;
 class SQLParser;
 class MiniDB;
 
-#endif
+#endif // MINIDB_H
