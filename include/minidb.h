@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <cctype>
 #include <iomanip>
+#include "value.h"
 
 #include "common.h"
 

@@ -17,7 +17,8 @@ file(GLOB_RECURSE SOURCES ${SRC_DIR}/*.cpp)
 file(GLOB_RECURSE HEADERS ${INC_DIR}/*.h)
 
 # Add executable target
-add_executable(${EXECUTABLE_NAME} ${SOURCES} ${HEADERS})
+add_executable(${EXECUTABLE_NAME} ${SOURCES} ${HEADERS}
+        src/value.cpp)
 
 # Include the include folder for headers
 target_include_directories(${EXECUTABLE_NAME} PRIVATE ${INC_DIR})
