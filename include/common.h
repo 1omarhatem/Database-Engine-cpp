@@ -42,6 +42,7 @@ struct Column {
         std::getline(iss, part, ',');
         bool isPrimaryKey = (part == "1");
 
+
         return Column(name, type, size, isPrimaryKey);
     }
 };
